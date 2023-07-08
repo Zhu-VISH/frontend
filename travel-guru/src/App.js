@@ -33,7 +33,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Destinations />} />
           <Route path='/home' element={<Destinations />} />
-          <Route path='/contact' element={<Contact />} />
+          <Route path='/contact-us' element={<Contact />} />
           <Route path='/destination/:destinationId' element={<Booking />} />
           <Route path='/login' element={<LogInMain />} />
           <Route path='/destination/search' element={<PrivateRoute>

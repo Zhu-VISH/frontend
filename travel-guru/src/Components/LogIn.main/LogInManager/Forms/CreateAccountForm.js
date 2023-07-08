@@ -1,64 +1,66 @@
 import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
 import { checkBothPasswords, handleRememberMe } from "../LogInMangager";
-import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
-import { firebaseConfig } from "../../firebase.config";
 import { User } from "../../../../App";
 import { useLocation, useNavigate } from "react-router-dom";
 
 //:::: Create_An_Account Form ::://
 const CreateAccountForm = ({ setUserLogIn }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [user, setUser] = useContext(User)
-    const [formValidate, setFormValidate] = useState({ passwordMatched: false, error: '' })
+    const [user, setUser] = useContext(User);
+    const [formValidate, setFormValidate] = useState({ passwordMatched: false, error: '' });
 
-    const location = useLocation()
-    const navigate = useNavigate()
-    const { from } = location.state || { from: { pathname: '/' } }
-
-    // FIREBASE
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { from } = location.state || { from: { pathname: '/' } };
 
     // Create_account_btn handler
     const onSubmit = (data) => {
-        checkBothPasswords(data, formValidate, setFormValidate)
-        formValidate.passwordMatched && createUserWithEmailAndPassword(auth, data.email, data.password)
-            .then(() => {
-                // Update userName to firebase
-                updateProfile(auth.currentUser, {
-                    displayName: data.firstName,
-                })
-                    .then((res) => console.log(res))
-                    .catch((error) => console.log(error));
+        checkBothPasswords(data, formValidate, setFormValidate);
+        formValidate.passwordMatched && handleAccountCreation(data);
+    };
 
-                // Set user info inside User_Context API
-                const userInfo = { ...user }
-                userInfo.email = data.email
-                userInfo.username = data.name
-                userInfo.error = '';
-                setUser(userInfo)
+    const handleAccountCreation = (data) => {
+        // Handle account creation logic here (e.g., API call, database insertion, etc.)
 
-                // RememberMe stores user (email-password)
-                handleRememberMe(data)
-                localStorage.setItem('username', JSON.stringify(data.firstName))
-                localStorage.setItem('userLoggedIn', JSON.stringify(true));
-                // redirect user on previous route
-                navigate(from)
-            })
-            .catch(() => {
-                setUser(user => ({ ...user, createAccountError: 'auth/email-already-in-use' }))
-            });
-    }
+        // Set user info inside User_Context API
+        const userInfo = { ...user };
+        userInfo.email = data.email;
+        userInfo.username = data.firstName;
+        userInfo.error = '';
+        setUser(userInfo);
+
+        // RememberMe stores user (email-password)
+        handleRememberMe(data);
+        localStorage.setItem('username', JSON.stringify(data.firstName));
+        localStorage.setItem('userLoggedIn', JSON.stringify(true));
+
+        // redirect user on previous route
+        navigate(from);
+    };
 
     return (
+        async function postdata ()  {
+            data = {
+                "name" : ,
+                "email" : ,
+                "password" : 
+            };
+          await axios.post(config.base_url + '/signup',
+          data,
+          {
+            headers : {
+                "Content-Type": "application/json"
+            }
+          }
+          )
+        }
         <div>
             <form onSubmit={handleSubmit(onSubmit)} className='mb-0 tw-space-y-2'>
                 {/*First Name */}
                 <div>
                     <label className='mb-2 tw-text-sm'>First Name</label>
-                    <input required className='form-control form-control-sm '
+                    <input required className='form-control form-control-sm'
                         type="text"
                         name="firstName"
                         {...register("firstName", {
@@ -70,7 +72,7 @@ const CreateAccountForm = ({ setUserLogIn }) => {
                 {/*Last Name */}
                 <div>
                     <label className='mb-2 tw-text-sm'>Last Name</label>
-                    <input required className='form-control form-control-sm '
+                    <input required className='form-control form-control-sm'
                         type="text"
                         name="lastName"
                         {...register("lastName", {
@@ -82,7 +84,7 @@ const CreateAccountForm = ({ setUserLogIn }) => {
                 {/* Email */}
                 <div>
                     <label className='mb-2 tw-text-sm'>Email</label>
-                    <input required className='form-control form-control-sm '
+                    <input required className='form-control form-control-sm'
                         type="email"
                         name="email"
                         {...register("email", {
@@ -99,7 +101,7 @@ const CreateAccountForm = ({ setUserLogIn }) => {
                 {/* Password */}
                 <div>
                     <label className='mb-2 tw-text-sm'>Password</label>
-                    <input required className='form-control form-control-sm '
+                    <input required className='form-control form-control-sm'
                         type="password"
                         name="password"
                         {...register("password", {
@@ -110,12 +112,12 @@ const CreateAccountForm = ({ setUserLogIn }) => {
                             },
                         })} />
                     {errors.password && <p className='text-danger'>{errors.password.message}</p>}
-
                 </div>
+                
                 {/*Confirm Password */}
                 <div>
                     <label className='mb-2 tw-text-sm'>Confirm Password</label>
-                    <input required className='form-control form-control-sm '
+                    <input required className='form-control form-control-sm'
                         type="password"
                         name="confirmPassword"
                         {...register("confirmPassword", {
@@ -125,9 +127,8 @@ const CreateAccountForm = ({ setUserLogIn }) => {
                                 message: "Password must be at least 6 characters long",
                             },
                         })} />
-                    {errors.password && <p className='text-danger'>{errors.password.message}</p>}
+                    {errors.confirmPassword && <p className='text-danger'>{errors.confirmPassword.message}</p>}
                     <p className='text-danger'>{formValidate.error}</p>
-
                 </div>
 
                 <div className="mt-4">

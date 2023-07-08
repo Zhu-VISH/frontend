@@ -1,10 +1,11 @@
 import React from 'react';
 import GoogleLogin from './LogInManager/GoogleLogin';
 import Forms from './LogInManager/Forms/Forms';
-
-
+import axios from 'axios';
+import config from '../../../src/config.json'
 //:::::LOG IN (Main) :::::://
 const LogInMain = () => {
+    
     return (
         <section className='tw-min-h-screen tw-py-20 tw-flex tw-align-middle tw-justify-center container'>
             <div className='row m-auto tw-w-screen'>
@@ -18,7 +19,7 @@ const LogInMain = () => {
                         <hr className="tw-flex-grow tw-border-gray-500 tw-border-1 tw-ml-4" />
                     </div>
                     
-                    <GoogleLogin />
+                    {/* <GoogleLogin /> */}
                 </div>
             </div>
         </section>

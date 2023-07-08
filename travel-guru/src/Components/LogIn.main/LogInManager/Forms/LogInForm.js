@@ -2,59 +2,48 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useContext, useState } from "react";
 import { handleRememberMe } from "../LogInMangager";
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { firebaseConfig } from "../../firebase.config";
 import { User } from "../../../../App";
 import { useLocation, useNavigate } from "react-router-dom";
 
 //:::: LOG-IN FORM :::://
 const LogInForm = ({ setUserLogIn }) => {
     // Selecting 'remember me' sets the 'rememberMe' state to true,
-    const [rememberMe, setRememberMe] = useState(false)
-    const [user, setUser] = useContext(User)
+    const [rememberMe, setRememberMe] = useState(false);
+    const [user, setUser] = useContext(User);
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const location = useLocation()
-    const navigate = useNavigate()
-    const { from } = location.state || { from: { pathname: '/' } }
-
-    // FIREBASE
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const { from } = location.state || { from: { pathname: '/' } };
 
     // LOG-IN BUTTON handler
     const onSubmit = (data, rememberMe) => {
-        signInWithEmailAndPassword(auth, data.email, data.password)
-            .then(res => {
-                // Set user info inside User_Context API
-                const userAuth = res.user;
-                const userInfo = { ...user }
-                userInfo.email = userAuth.email
-                userInfo.username = userAuth.displayName
-                userInfo.error = '';
-                setUser(userInfo)
-                console.log(userAuth);
-                /// RememberMe stores user (email-password)
-                rememberMe && handleRememberMe(data)
-                localStorage.setItem('username', JSON.stringify(userAuth.displayName))
-                localStorage.setItem('userLoggedIn', JSON.stringify(true));
+        // Handle login logic here (e.g., API call, authentication)
 
-                // redirect user on previous route
-                navigate(from)
-            })
-            .catch(error => {
-                setUser(user => ({ ...user, logInError: error.code }))
-            });
+        // Set user info inside User_Context API
+        const userInfo = { ...user };
+        userInfo.email = data.email;
+        userInfo.username = ''; // Set username if available
+        userInfo.error = '';
+        setUser(userInfo);
+
+        // RememberMe stores user (email-password)
+        rememberMe && handleRememberMe(data);
+        localStorage.setItem('username', JSON.stringify(userInfo.username));
+        localStorage.setItem('userLoggedIn', JSON.stringify(true));
+
+        // redirect user on previous route
+        navigate(from);
     };
+
     // If the user had previously selected the "remember me" option before logging in,
     // this function will retrieve their email and password from local storage and 
     // set those values as the default values for the input fields//
     const autoFillUser = (key) => {
-        const getLogInfo = localStorage.getItem("userLogInInfo")
-        const loggedInfo = JSON.parse(getLogInfo)
-        return loggedInfo && loggedInfo[key]
-    }
+        const getLogInfo = localStorage.getItem("userLogInInfo");
+        const loggedInfo = JSON.parse(getLogInfo);
+        return loggedInfo && loggedInfo[key];
+    };
 
     return (
         <>
@@ -99,7 +88,6 @@ const LogInForm = ({ setUserLogIn }) => {
                 </div>
 
                 <div>
-
                     {/* Authentication error goes here */}
                     <p className="text-center mt-2 text-danger">{user.logInError}</p>
 
