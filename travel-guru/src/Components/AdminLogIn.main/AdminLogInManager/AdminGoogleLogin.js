@@ -5,10 +5,10 @@ import { firebaseConfig } from "../firebase.config";
 import { User } from "../../../App";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const GoogleLogin = () => {
-    const [user, setUser] = useContext(User)
-    const location = useLocation()
-    const navigate = useNavigate()
+const AdminGoogleLogin = () => {
+    const [Adminuser, AdminsetUser] = useContext(User)
+    const Adminlocation = useLocation()
+    const Adminnavigate = useNavigate()
     const { from } = location.state || { from: { pathname: '/' } }
 
     // FIREBASE
@@ -17,7 +17,7 @@ const GoogleLogin = () => {
     const provider = new GoogleAuthProvider();
 
     //GOOGLE Event handler
-    const googleHandler = () => {
+    const AdmingoogleHandler = () => {
         signInWithPopup(auth, provider)
             .then(res => {
                 const userData = res.user;
@@ -56,4 +56,4 @@ const GoogleLogin = () => {
     );
 };
 
-export default GoogleLogin;
+export default AdminGoogleLogin;

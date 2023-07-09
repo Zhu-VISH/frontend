@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useContext, useState } from "react";
-import { handleRememberMe } from "../LogInMangager";
+import { handleRememberMe } from "../AdminLogInMangager";
 import { User } from "../../../../App";
 import { useLocation, useNavigate } from "react-router-dom";
 
 //:::: LOG-IN FORM :::://
-const LogInForm = ({ setUserLogIn }) => {
+const AdminLogInForm = ({ setUserLogIn }) => {
     // Selecting 'remember me' sets the 'rememberMe' state to true,
     const [rememberMe, setRememberMe] = useState(false);
     const [user, setUser] = useContext(User);
@@ -75,6 +75,43 @@ const LogInForm = ({ setUserLogIn }) => {
         <>
             {/* Log In */}
             <form onSubmit={handleSubmit(onSubmit)} className='mb-0 tw-space-y-6'>
+            {/* <div>
+    <label className='mb-2'>Name</label>
+    <input
+        required
+        className='form-control'
+        type="text"
+        name="name"
+        id="name"
+        defaultValue={autoFillUser('name')}
+        {...register("name", {
+            required: true,
+        })}
+    />
+    {errors.name && <p className='text-danger'>Name is required</p>}
+</div> */}
+<div>
+    <label className='mb-2'>Phone Number</label>
+    <input
+        required
+        className='form-control'
+        type="tel"
+        name="phoneNumber"
+        id="phoneNumber"
+        defaultValue={autoFillUser('phoneNumber')}
+        {...register("phoneNumber", {
+            required: true,
+            pattern: {
+                value: /^\d{10}$/,
+                message: "Invalid phone number. Please enter a 10-digit number.",
+            },
+        })}
+    />
+    {errors.phoneNumber && <p className='text-danger'>{errors.phoneNumber.message}</p>}
+</div>
+
+
+
                 {/* Email */}
                 <div>
                     <label className='mb-2'>Email</label>
@@ -96,6 +133,7 @@ const LogInForm = ({ setUserLogIn }) => {
 
                 {/* Password */}
                 <div>
+
                     <label className='mb-2'>Password</label>
                     <input required className='form-control'
                         type="password"
@@ -130,4 +168,4 @@ const LogInForm = ({ setUserLogIn }) => {
     );
 }
 
-export default LogInForm;
+export default AdminLogInForm;

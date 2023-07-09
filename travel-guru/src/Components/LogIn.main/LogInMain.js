@@ -13,11 +13,11 @@ const LogInMain = () => {
                     <Forms />
 
                     {/* Form divider  */}
-                    <div className="tw-flex tw-items-center tw-my-5">
+                    {/* <div className="tw-flex tw-items-center tw-my-5">
                         <hr className="tw-flex-grow tw-border-gray-500 tw-border-1 tw-mr-4" />
                         <span className="tw-text-gray-900 tw-font-medium">Or</span>
                         <hr className="tw-flex-grow tw-border-gray-500 tw-border-1 tw-ml-4" />
-                    </div>
+                    </div> */}
                     
                     {/* <GoogleLogin /> */}
                 </div>

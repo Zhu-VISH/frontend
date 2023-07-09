@@ -7,7 +7,8 @@ import { motion } from "framer-motion"
 // ::::::: NAVBAR ::::::::://
 const NavbarComponent = () => {
     // Get user-Info
-    const userLoggedIn = JSON.parse(localStorage.getItem('userLoggedIn'))
+    const userLoggedIn = JSON.parse(localStorage.getItem('userLoggedIn'));
+    const adminLoggedIn = JSON.parse(localStorage.getItem('adminLoggedIn'));
     const [user, setUser] = useContext(User)
 
     const navigate = useNavigate()
@@ -27,6 +28,26 @@ const NavbarComponent = () => {
         }
         setUser(userInfo)
     }
+    
+  // Admin Log Out Handler
+  const adminLogOutHandler = () => {
+    localStorage.removeItem('adminLoggedIn');
+    const adminInfo = {
+      // Add any admin-specific properties here
+      // For example: username, email, role, etc.
+      username: '',
+      email: '',
+      error: ''
+
+    };
+    // Set adminInfo to appropriate initial admin values
+     setUser(adminInfo);  // Uncomment this line if needed
+  };
+
+//   // Admin Log In Handler
+//   const adminLogInHandler = () => {
+//     navigate('/AdminlogIn');
+//   };
 
     return (
         <>
@@ -57,6 +78,21 @@ const NavbarComponent = () => {
                                         /* Log in Button*/
                                         : <Button onClick={() => { navigate('/logIn') }}
                                             className='fw-semibold' variant="warning">Log in
+                                        </Button>}
+
+                                </Nav.Link>
+                                <Nav.Link >
+                                    { /* Log out Button*/}
+                                    {adminLoggedIn ?
+                                        <motion.div>
+                                            <Button
+                                                onClick={logOutHandler}
+                                                className='fw-semibold text-nowrap' variant="warning">Admin Log out</Button>
+                                        </motion.div>
+
+                                        /* Log in Button*/
+                                        : <Button onClick={() => { navigate('/AdminlogIn') }}
+                                            className='fw-semibold' variant="warning">Admin Log in
                                         </Button>}
 
                                 </Nav.Link>

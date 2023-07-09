@@ -12,6 +12,7 @@ import Search from './Components/Search/Search';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import LogInMain from './Components/LogIn.main/LogInMain';
 import Contact from './Components/Contact/Contact';
+import AdminLogInMain from './Components/AdminLogIn.main/AdminLogInMain';
 
 export const User = createContext()
 
@@ -36,7 +37,9 @@ function App() {
           <Route path='/contact-us' element={<Contact />} />
           <Route path='/destination/:destinationId' element={<Booking />} />
           <Route path='/login' element={<LogInMain />} />
+          <Route path='/AdminLogin' element={<AdminLogInMain />} />
           <Route path='/destination/search' element={<PrivateRoute>
+            
             <Search />
           </PrivateRoute>} />
           <Route path='*' element={<PageNotFound />} />
