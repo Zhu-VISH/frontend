@@ -2,12 +2,12 @@
 
 export const stay = [
     {
-        title: 'Light bright airy stylish apt & safe peaceful stay',
+        title: 'Light bright airy stylish apt & safe peaceful stay', //Travel Agent's Name
         img: 'Rectangle 26',
         facilities: [
-            '4 guests 2 bedroom 2 beds 2 baths',
-            'Wifi AC kitchen',
-            'Cancelation flexibility available'
+            '4 guests 2 bedroom 2 beds 2 baths', //Desciption
+            'Wifi AC kitchen',                   //Phone Number
+            'Cancelation flexibility available'  //Email
         ],
         rating: 4.9,
         rated_people: 100,
