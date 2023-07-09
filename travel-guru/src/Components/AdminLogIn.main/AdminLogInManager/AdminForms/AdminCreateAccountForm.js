@@ -1,14 +1,14 @@
-import { useForm } from "react-hook-form";
-import { useContext, useState } from "react";
-import { checkBothPasswords, handleRememberMe } from "../LogInMangager";
-import { User } from "../../../../App";
-import { useLocation, useNavigate } from "react-router-dom";
+import { AdminuseForm } from "react-hook-form";
+import { AdminuseContext, AdminuseState } from "react";
+import { AdmincheckBothPasswords, AdminhandleRememberMe } from "../AdminLogInMangager";
+import { AdminUser } from "../../../../App";
+import { AdminuseLocation, AdminuseNavigate } from "react-router-dom";
 import config from '../../../../config.json'
 //:::: Create_An_Account Form ::://
-const CreateAccountForm = ({ setUserLogIn }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const [user, setUser] = useContext(User);
-    const [formValidate, setFormValidate] = useState({ passwordMatched: false, error: '' });
+const AdminCreateAccountForm = ({ AdminsetUserLogIn }) => {
+    const { Adminregister, AdminhandleSubmit, formState: { errors } } = useForm();
+    const [Adminuser, AdminsetUser] = useContext(AdminUser);
+    const [AdminformValidate, AdminsetFormValidate] = useState({ passwordMatched: false, error: '' });
 
     const location = useLocation();
     const navigate = useNavigate();
@@ -16,7 +16,7 @@ const CreateAccountForm = ({ setUserLogIn }) => {
 
     // Create_account_btn handler
     const onSubmit = (data) => {
-        checkBothPasswords(data, formValidate, setFormValidate);
+        AdmincheckBothPasswords(data, formValidate, setFormValidate);
         formValidate.passwordMatched && handleAccountCreation(data);
     };
 
@@ -41,9 +41,9 @@ const CreateAccountForm = ({ setUserLogIn }) => {
     async function postData() {
         const data = {
             "id": 2,
-            "name": document.getElementById('firstNameInput').value.toString(),
-            "email": document.getElementById('email').value.toString(),
-            "password": document.getElementById('password').value.toString(),
+            "name": document.getElementById('AdminfirstNameInput').value.toString(),
+            "email": document.getElementById('Adminemail').value.toString(),
+            "password": document.getElementById('Adminpassword').value.toString(),
         };
 
         const response = await fetch('http://localhost:5000/signup', {
@@ -83,7 +83,7 @@ const CreateAccountForm = ({ setUserLogIn }) => {
                 <input required className='form-control form-control-sm'
                     type="text"
                     name="firstName"
-                    id="firstNameInput"
+                    id="AdminfirstNameInput"
                     {...register("firstName", {
                         required: true,
                     })}
@@ -108,7 +108,7 @@ const CreateAccountForm = ({ setUserLogIn }) => {
                 <input required className='form-control form-control-sm'
                     type="email"
                     name="email"
-                    id="email"
+                    id="Adminemail"
                     {...register("email", {
                         required: true,
                         pattern: {
@@ -126,7 +126,7 @@ const CreateAccountForm = ({ setUserLogIn }) => {
                 <input required className='form-control form-control-sm'
                     type="password"
                     name="password"
-                    id="password"
+                    id="Adminpassword"
                     {...register("password", {
                         required: true,
                         minLength: {
@@ -158,7 +158,7 @@ const CreateAccountForm = ({ setUserLogIn }) => {
                 {/* Authentication error goes here */}
                 <p className="text-center mb-2 text-danger">{user.createAccountError}</p>
 
-                <button className='btn btn-warning fw-semibold w-100' type="submit" onClick={() => postData()} >Create an account</button>
+                <button className='btn btn-warning fw-semibold w-100' type="submit" onClick={() => postData()} >Create an Admin account</button>
 
                 {/* 'CreateAnAccount' will toggle this form */}
                 <p className="text-center mt-3 tw-text-sm md:tw-text-base">Already have an account? <span onClick={() => setUserLogIn(true)}
@@ -168,4 +168,4 @@ const CreateAccountForm = ({ setUserLogIn }) => {
         </div>   
     );
 }
-export default CreateAccountForm;
+export default AdminCreateAccountForm;
