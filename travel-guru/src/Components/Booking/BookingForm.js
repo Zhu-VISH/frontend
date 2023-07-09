@@ -56,23 +56,6 @@ const BookingForm = ({ destination }) => {
         <form onSubmit={handleSubmit}
             className='bg-white tw-space-y-5 tw-p-6 tw-rounded-lg tw-text-gray-600'>
 
-            {/* Origin */}
-            <div>
-                <label className='tw-tracking-wide tw-mb-1.5' htmlFor="origin"> Origin</label>
-                <select name='origin' onChange={handleOrigin} className="form-select">
-
-                    {/* Default option */}
-                    <option value={''}>Select Division</option>
-
-                    {  /*Other options */
-                        FromLocations.map((from, i) => <option key={'option' + i} value={
-                            from.toLowerCase()}>{from}</option>)
-                    }
-                </select>
-                {/* Error goes here */}
-                <p className='text-danger'>{error.originError}</p>
-            </div>
-
             {/* Destination*/}
             <div>
                 <label className='tw-tracking-wide tw-mb-1.5' htmlFor="from"> Destination
@@ -104,7 +87,7 @@ const BookingForm = ({ destination }) => {
             </div>
 
             {/* Start-Booking btn*/}
-            <input type="submit" value='Start Booking' className='mt-4 w-100 btn btn-warning' />
+            <input type="submit" value='Search' className='mt-4 w-100 btn btn-warning' />
         </form>
     );
 };
